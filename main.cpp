@@ -123,7 +123,10 @@ int main()
         letters.push_back(letter);
     }
 
-    
+    for(int i=0; i<m; i++)
+    {
+        cout << letters.at(i) << " ";
+    }
 
     return 0;
 }
