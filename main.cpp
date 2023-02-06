@@ -65,32 +65,65 @@ bool isValid(int p, int q, int e, int phi)
     }
 }
 
+int Decipher(int c, int d, int n)
+{
+    int c1 = c;
+    d = d-1;
+    while(d>0)
+    {
+        c1 = (c1 * c) % n;
+        d = d-1;
+    }
+    return c1;
+}
+
 int main()
 {
     int e = 0;
     int n = 0;
     int m = 0;
-    int num = 0;
-    vector<int> v;
+    vector<int> v; // store encoded message
     cin >> e >> n >> m; // input e,n,m
 
+    int temp = 0;
     for(int i=0; i<m; i++) // input encoded message
     {
-        cin >> num;
-        v.push_back(num);
+        cin >> temp;
+        v.push_back(temp);
     }
 
-    vector<int> factors;
-    factors = primeFactors(e);
+    // find p,q,phi
+    vector<int> factors; // to store p,q
+    factors = primeFactors(n);
     int p = factors.at(0);
     int q = factors.at(1);
     int phi = (p-1) * (q-1);
-    if(!isValid)
+    int d = 0;
+
+    if(!isValid) // check if key is valid
     {
         cout << "Public key is not valid!";
         return 0;
     }
+    
+    for(int i = 0; i<n; i++) // find d
+    {
+        if((i * e) % phi == 1)
+        {
+            d = i;
+            break;
+        }
+    }
 
+    vector<int> letters; //store decrypted numbers
+    int letter = 0;
+    for(int i=0; i<m; i++)
+    {
+        letter = Decipher(v.at(i), d, n);
+        letters.push_back(letter);
+    }
+
+    
 
     return 0;
 }
